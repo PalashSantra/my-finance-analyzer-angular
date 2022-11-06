@@ -43,8 +43,9 @@ export class LoginComponent implements OnInit {
       this.ext.post('/loginMe',body,[]).subscribe((res)=>{
         console.log(res)
         if(res?.status==='success'){
-          this.cookie.set('user',res.user_id);
-          this.cookie.set('token',res.token);
+          sessionStorage.setItem('user',res.user_id);
+          sessionStorage.setItem('token',res.token);
+          sessionStorage.setItem('refreshToken',res.refreshToken);
           this.router.navigateByUrl('/')
         }else{
           this.loginError = true
