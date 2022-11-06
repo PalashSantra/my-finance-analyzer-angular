@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ExternalService } from '../external.service';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,8 +12,12 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class LoginComponent implements OnInit {
   loginFrm: FormGroup;
+  loginError: boolean = false
 
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder, 
+    private ext:ExternalService, 
+    private cookie: CookieService, 
+    private router:Router) { 
     this.loginFrm = new FormGroup({
       userName: new FormControl('',[<any>Validators.required]),
       password: new FormControl('', [<any>Validators.required, <any>Validators.minLength(6)]),
@@ -29,6 +36,20 @@ export class LoginComponent implements OnInit {
 
   submitForm(): void {
     if (this.loginFrm.valid) {
+      const body = {
+        'email' : this.loginFrm.get('userName')?.value,
+        'password': this.loginFrm.get('password')?.value
+      }
+      this.ext.post('/loginMe',body,[]).subscribe((res)=>{
+        console.log(res)
+        if(res?.status==='success'){
+          this.cookie.set('user',res.user_id);
+          this.cookie.set('token',res.token);
+          this.router.navigateByUrl('/')
+        }else{
+          this.loginError = true
+        }
+      })
       console.log('submit', this.loginFrm.value);
     } else {
       Object.values(this.loginFrm.controls).forEach(control => {
