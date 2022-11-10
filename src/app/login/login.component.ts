@@ -31,6 +31,15 @@ export class LoginComponent implements OnInit {
         password: new FormControl('', [<any>Validators.required, <any>Validators.minLength(6)]),
         remember: new FormControl()
       });
+      const refToken = localStorage.getItem('refreshToken')
+      const user = localStorage.getItem('user')
+      if(sessionStorage.getItem('token')){
+        this.router.navigate(['/'])
+      } else if(refToken && user){
+          sessionStorage.setItem('refreshToken',refToken)
+          sessionStorage.setItem('user',user)
+          this.router.navigate(['/'])
+      }
   }
 
 
@@ -41,17 +50,19 @@ export class LoginComponent implements OnInit {
         'password': this.loginFrm.get('password')?.value
       }
       this.ext.post('/loginMe',body,[]).subscribe((res)=>{
-        console.log(res)
         if(res?.status==='success'){
           sessionStorage.setItem('user',res.user_id);
           sessionStorage.setItem('token',res.token);
           sessionStorage.setItem('refreshToken',res.refreshToken);
+          if(this.loginFrm.get('remember')?.value){
+            localStorage.setItem('refreshToken',res.refreshToken);
+            localStorage.setItem('user',res.user_id);
+          }
           this.router.navigateByUrl('/')
         }else{
           this.loginError = true
         }
       })
-      console.log('submit', this.loginFrm.value);
     } else {
       Object.values(this.loginFrm.controls).forEach(control => {
         if (control.invalid) {

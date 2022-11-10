@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service'
 
 @Injectable({
@@ -11,20 +11,37 @@ export class ExternalService {
   private baseUrl = "http://localhost"
   private headers : HttpHeaders
 
+  private isSessionTimeOutSource : any
+  isSessionTimeOut : any
+
   constructor(private http: HttpClient, private cookie: CookieService) { 
+    this.isSessionTimeOutSource = new BehaviorSubject<any>({});
+    this.isSessionTimeOut = this.isSessionTimeOutSource.asObservable()
     this.headers = new HttpHeaders()
-    let token = cookie.get("token")
-    if(token){
-      this.headers.set('Authorization','Bearer '+ token)
+  }
+
+  private createHeader(isRefreshTokenRequired:boolean){
+    this.headers = new HttpHeaders()
+    let token
+    if(isRefreshTokenRequired){
+      token = sessionStorage.getItem('refreshToken')
+      if(token){
+        this.headers = this.headers.set('refreshtoken', token)
+      }
+    }else{
+      token = sessionStorage.getItem("token")
+      if(token){
+        this.headers = this.headers.set('Authorization','Bearer '+ token)
+      }
     }
   }
 
-  public get(url:String,params:Array<any>) : Observable<any> {
-      return this.http.get(this.baseUrl+url,this.createOption(params))
+  public get(url:String,params:Array<any>,isRefreshTokenRequired:boolean = false) : Observable<any> {
+      return this.http.get(this.baseUrl+url,this.createOption(params,isRefreshTokenRequired))
               .pipe(catchError(this.handleError)); 
   }
-  public post(url:String,body:any,params:Array<any>) : Observable<any> {
-    return this.http.post(this.baseUrl+url,body,this.createOption(params))
+  public post(url:String,body:any,params:Array<any>,isRefreshTokenRequired:boolean = false) : Observable<any> {
+    return this.http.post(this.baseUrl+url,body,this.createOption(params,isRefreshTokenRequired))
             .pipe(catchError(this.handleError)); 
   }
   private handleError(err: HttpErrorResponse) {
@@ -38,8 +55,9 @@ export class ExternalService {
     return throwError(()=> new Error(errorMessage));
   }
 
-  private createOption(params:Array<any>) : any{
+  private createOption(params:Array<any>,isRefreshTokenRequired:boolean) : any{
     const paramSet : HttpParams = new HttpParams();
+    this.createHeader(isRefreshTokenRequired)
       params.forEach(item=>{
         paramSet.set(item.param,item.value)
       })
@@ -47,6 +65,11 @@ export class ExternalService {
         'headers':this.headers,
         'params':paramSet
       }
+  }
+
+  changeSession(isSessionTimeOut:boolean, path:any){
+    console.log(path)
+    this.isSessionTimeOutSource.next({'isSessionTimeOut': isSessionTimeOut,'path':path});
   }
   
 }
