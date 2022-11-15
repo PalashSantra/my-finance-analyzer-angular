@@ -13,6 +13,13 @@ import { UserOutline, LockOutline, AlertOutline } from '@ant-design/icons-angula
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +27,13 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MainComponent } from './main/main.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { TransactionComponent } from './transaction/transaction.component';
+import { TranEntryComponent } from './tran-entry/tran-entry.component';
+import { TranListComponent } from './tran-list/tran-list.component';
+import { TranTransferComponent } from './tran-transfer/tran-transfer.component';
+
 
 const icons: IconDefinition[] = [ UserOutline, LockOutline, AlertOutline ];
 
@@ -29,7 +43,13 @@ const icons: IconDefinition[] = [ UserOutline, LockOutline, AlertOutline ];
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
-    MainComponent
+    MainComponent,
+    HeaderComponent,
+    FooterComponent,
+    TransactionComponent,
+    TranEntryComponent,
+    TranListComponent,
+    TranTransferComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +63,14 @@ const icons: IconDefinition[] = [ UserOutline, LockOutline, AlertOutline ];
     NzIconModule.forRoot(icons),
     NzCheckboxModule,
     NzInputModule,
-    NzGridModule
+    NzGridModule,
+    NzLayoutModule,
+    NzMenuModule,
+    NzCardModule,
+    NzDatePickerModule,
+    NzSwitchModule,
+    NzDropDownModule,
+    NzSelectModule
   ],
   providers: [ { provide: NZ_I18N, useValue: en_US } ],
   bootstrap: [AppComponent]

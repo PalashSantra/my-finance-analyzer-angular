@@ -18,7 +18,6 @@ export class AuthGuard implements CanActivate {
   }
   canActivateChild(route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree{
-    console.log(sessionStorage.getItem('token'))
     if(sessionStorage.getItem('token')){
       this.ext.post('/validateToken',{},[]).subscribe(res=>{
         if(res?.status==='error'){

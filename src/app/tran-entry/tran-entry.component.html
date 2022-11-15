@@ -1,0 +1,45 @@
+
+    <nz-card nzTitle="Transaction Details" >
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Transaction Date</nz-form-label>
+                <nz-form-control [nzSm]="16" [nzXs]="24">
+                  <nz-date-picker formControlName="tranDate"></nz-date-picker>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Transaction Type</nz-form-label>
+                <nz-form-control [nzSm]="16" [nzXs]="24">
+                    <nz-switch nzCheckedChildren="CR" formControlName="tranType" nzUnCheckedChildren="DR"></nz-switch>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Transaction Cost</nz-form-label>
+                <nz-form-control [nzSm]="4" [nzXs]="6">
+                    <input type="text" formControlName="tranAmount" nz-input placeholder="Amount"/>
+                </nz-form-control>
+                <nz-form-control [nzSm]="4" [nzXs]="6">
+                    <input type="text" formControlName="tranUnit" nz-input placeholder="Unit"/>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Ledger</nz-form-label>
+                <nz-form-control [nzSm]="12" [nzXs]="20">
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a ledger" formControlName="tranLedger">
+                        <nz-option *ngFor="let ledger of ledgerList" nzLabel="{{ledger.name}}" nzValue="{{ledger.id}}"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+                <div nz-col [nzSm]="4" [nzXs]="4"><button nz-button nzType="primary" nzShape="circle">A</button></div>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Particulars</nz-form-label>
+                <nz-form-control [nzSm]="16" [nzXs]="24">
+                    <textarea rows="3" nz-input formControlName="tranParticulars"></textarea>
+                </nz-form-control>
+            </nz-form-item>
+            <div nzType="flex" style="text-align: right">
+                <button nz-button nzType="primary" style="margin-right: 3px;">Reset</button>
+                <button nz-button nzType="primary">Save</button>
+            </div>
+        </form>
+    </nz-card>
