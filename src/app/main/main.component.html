@@ -1,1 +1,14 @@
-<p>main works!</p>
+<nz-layout>
+    <nz-spin [nzTip]="message" [nzSpinning]="loading">
+        <nz-header>
+            <div class="logo"></div>
+            <app-header></app-header>
+        </nz-header>
+        <nz-content>
+            <router-outlet></router-outlet>
+        </nz-content>
+        <nz-footer>
+            <app-footer></app-footer>
+        </nz-footer>
+    </nz-spin>
+</nz-layout>
