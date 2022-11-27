@@ -63,6 +63,7 @@ export class TranEntryComponent implements OnInit {
       if(Array.isArray(res)){
         this.ledgerFullList = res
         this.ledgerList = []
+        this.validateForm.get('tranLedger')?.reset()
         res.forEach((item: { _id: any; name: any; })=>{
           this.ledgerList.push({
             'id': item._id,

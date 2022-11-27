@@ -26,9 +26,7 @@
                 <nz-form-item nz-col [nzSm]="11" [nzXs]="11">
                     <nz-form-control >
                         <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a ledger">
-                            <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-                            <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-                            <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                            <nz-option *ngFor="let ledger of ledgerList" nzLabel="{{ledger.name}}" nzValue="{{ledger.id}}"></nz-option>
                         </nz-select>
                     </nz-form-control>
                 </nz-form-item>
@@ -36,9 +34,7 @@
                 <nz-form-item nz-col [nzSm]="11" [nzXs]="11">
                     <nz-form-control >
                         <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a ledger">
-                            <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-                            <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-                            <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                            <nz-option *ngFor="let ledger of ledgerList" nzLabel="{{ledger.name}}" nzValue="{{ledger.id}}"></nz-option>
                         </nz-select>
                     </nz-form-control>
                 </nz-form-item>
@@ -47,6 +43,11 @@
                 <div nz-col [nzSm]="11" [nzXs]="11" style="max-height: 50px;min-height: 56px;"></div>
                 <div nz-col [nzSm]="2" [nzXs]="2" style="max-height: 50px;min-height: 56px;"></div>
                 <div nz-col [nzSm]="11" [nzXs]="11" style="max-height: 50px;min-height: 56px;"></div>
+            </div>
+            <div nzType="flex" style="text-align: left; margin-bottom: 10px;">
+                <nz-select nzMode="tags" nzPlaceHolder="Tags" style="width: 100%;" formControlName="tranTags">
+                    <nz-option *ngFor="let item of tags" [nzLabel]="item" [nzValue]="item"></nz-option>
+                </nz-select>
             </div>
             <div nzType="flex" style="text-align: right">
                 <button nz-button nzType="primary" style="margin-right: 3px;">Reset</button>
