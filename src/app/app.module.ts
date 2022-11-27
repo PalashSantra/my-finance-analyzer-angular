@@ -20,6 +20,9 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,6 +36,7 @@ import { TransactionComponent } from './transaction/transaction.component';
 import { TranEntryComponent } from './tran-entry/tran-entry.component';
 import { TranListComponent } from './tran-list/tran-list.component';
 import { TranTransferComponent } from './tran-transfer/tran-transfer.component';
+import { LedgerEntryComponent } from './ledger-entry/ledger-entry.component';
 
 
 const icons: IconDefinition[] = [ UserOutline, LockOutline, AlertOutline ];
@@ -49,7 +53,8 @@ const icons: IconDefinition[] = [ UserOutline, LockOutline, AlertOutline ];
     TransactionComponent,
     TranEntryComponent,
     TranListComponent,
-    TranTransferComponent
+    TranTransferComponent,
+    LedgerEntryComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +75,10 @@ const icons: IconDefinition[] = [ UserOutline, LockOutline, AlertOutline ];
     NzDatePickerModule,
     NzSwitchModule,
     NzDropDownModule,
-    NzSelectModule
+    NzSelectModule,
+    NzSpinModule,
+    NzMessageModule,
+    NzDrawerModule
   ],
   providers: [ { provide: NZ_I18N, useValue: en_US } ],
   bootstrap: [AppComponent]

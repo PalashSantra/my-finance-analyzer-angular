@@ -1,22 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service'
+import { CommonService } from './common.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ExternalService {
+export class ExternalService extends CommonService {
   //Need to change for production
   private baseUrl = "http://localhost"
   private headers : HttpHeaders
-
-  private isSessionTimeOutSource : any
-  isSessionTimeOut : any
+ 
 
   constructor(private http: HttpClient, private cookie: CookieService) { 
-    this.isSessionTimeOutSource = new BehaviorSubject<any>({});
-    this.isSessionTimeOut = this.isSessionTimeOutSource.asObservable()
+    super()
     this.headers = new HttpHeaders()
   }
 
@@ -66,10 +64,6 @@ export class ExternalService {
         'params':paramSet
       }
   }
-
-  changeSession(isSessionTimeOut:boolean, path:any){
-    console.log(path)
-    this.isSessionTimeOutSource.next({'isSessionTimeOut': isSessionTimeOut,'path':path});
-  }
+  
   
 }

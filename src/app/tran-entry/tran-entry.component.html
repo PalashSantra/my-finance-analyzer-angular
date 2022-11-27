@@ -8,7 +8,7 @@
                 </nz-form-control>
             </nz-form-item>
             <nz-form-item>
-                <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Transaction Type</nz-form-label>
+                <nz-form-label [nzSm]="8" [nzXs]="24">Transaction Type</nz-form-label>
                 <nz-form-control [nzSm]="16" [nzXs]="24">
                     <nz-switch nzCheckedChildren="CR" formControlName="tranType" nzUnCheckedChildren="DR"></nz-switch>
                 </nz-form-control>
@@ -29,7 +29,7 @@
                         <nz-option *ngFor="let ledger of ledgerList" nzLabel="{{ledger.name}}" nzValue="{{ledger.id}}"></nz-option>
                     </nz-select>
                 </nz-form-control>
-                <div nz-col [nzSm]="4" [nzXs]="4"><button nz-button nzType="primary" nzShape="circle">A</button></div>
+                <div nz-col [nzSm]="4" [nzXs]="4"><button nz-button nzType="primary" nzShape="circle" (click)="openDrawer()">A</button></div>
             </nz-form-item>
             <nz-form-item>
                 <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Particulars</nz-form-label>
@@ -37,9 +37,16 @@
                     <textarea rows="3" nz-input formControlName="tranParticulars"></textarea>
                 </nz-form-control>
             </nz-form-item>
+            <div nzType="flex" style="text-align: left; margin-bottom: 10px;">
+                <nz-select nzMode="tags" nzPlaceHolder="Tags" style="width: 100%;" formControlName="tranTags">
+                    <nz-option *ngFor="let item of tags" [nzLabel]="item" [nzValue]="item"></nz-option>
+                </nz-select>
+            </div>
             <div nzType="flex" style="text-align: right">
-                <button nz-button nzType="primary" style="margin-right: 3px;">Reset</button>
+                <button nz-button nzType="primary" style="margin-right: 3px;" (click)="resetForm()">Reset</button>
                 <button nz-button nzType="primary">Save</button>
             </div>
         </form>
     </nz-card>
+    <app-ledger-entry [drawerVisible]="drawerVisible" (drawerStatus)="drawerClose($event)"></app-ledger-entry>
+    

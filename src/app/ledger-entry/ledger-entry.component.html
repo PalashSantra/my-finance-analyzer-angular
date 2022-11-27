@@ -1,0 +1,49 @@
+<nz-drawer
+      [nzClosable]="false"
+      [nzVisible]="drawerVisible"
+      nzPlacement="top"
+      nzTitle="Ledger Information"
+      (nzOnClose)="drawerClose()"
+    >
+      <ng-container *nzDrawerContent>
+        <form nz-form [formGroup]="ledgerForm" (ngSubmit)="ledgerSubmitForm()">
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Ledger Name</nz-form-label>
+                <nz-form-control [nzSm]="12" [nzXs]="20">
+                    <input nz-input placeholder="Provide ledger name" formControlName="ledName" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Ledger Group</nz-form-label>
+                <nz-form-control [nzSm]="12" [nzXs]="20">
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a ledger group" 
+                    formControlName="ledGroup" [(ngModel)]="selectedGroup" (ngModelChange)="changeGroup()">
+                        <nz-option *ngFor="let ledger of ledgerGroup" nzLabel="{{ledger}}" nzValue="{{ledger}}"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="24">Ledger Type</nz-form-label>
+                <nz-form-control [nzSm]="12" [nzXs]="20">
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a ledger type" 
+                    formControlName="ledType" [(ngModel)]="selectedType" (ngModelChange)="changeType()">
+                        <nz-option *ngFor="let ledger of ledgerType" nzLabel="{{ledger}}" nzValue="{{ledger}}"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="24">Ledger Sub Type</nz-form-label>
+                <nz-form-control [nzSm]="12" [nzXs]="20">
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a ledger sub type" 
+                    formControlName="ledSubType" [(ngModel)]="selectedSubType">
+                        <nz-option *ngFor="let ledger of ledgerSubType" nzLabel="{{ledger}}" nzValue="{{ledger}}"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <div nzType="flex" style="text-align: right">
+                <button nz-button nzType="primary" style="margin-right: 3px;" (click)="resetForm()">Reset</button>
+                <button nz-button nzType="primary">Save</button>
+            </div>
+        </form>
+      </ng-container>
+    </nz-drawer>

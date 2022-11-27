@@ -19,7 +19,6 @@ export class AppComponent implements OnInit {
         if(data){
           this.ext.post('/refreshToken',{},[],true).subscribe(res=>{
             if(res?.status==='success'){
-              sessionStorage.setItem('user',res.user_id);
               sessionStorage.setItem('token',res.token);
             }
             else{
