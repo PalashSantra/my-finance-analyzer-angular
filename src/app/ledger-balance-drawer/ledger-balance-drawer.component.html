@@ -1,0 +1,11 @@
+<nz-drawer
+      [nzClosable]="false"
+      [nzVisible]="drawerVisible"
+      [nzPlacement]="position"
+      nzTitle="Ledger Balance Information"
+      (nzOnClose)="drawerClose()"
+    >
+      <div *nzDrawerContent>
+        <app-ledger-balance-chart [ledgerDataRaw]="ledgerBalanceData"></app-ledger-balance-chart>
+      </div>
+    </nz-drawer>

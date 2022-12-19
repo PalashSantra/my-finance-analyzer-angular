@@ -14,6 +14,10 @@ export class TransactionService extends CommonService {
   ledgerList : any
   private resultStatusLedgerSource : any
   resultStatusLedger: any
+  private transactionListSource : any
+  transactionList: any
+  private ledgerBalanceSource : any
+  ledgerBalance : any
 
   constructor(private ext:ExternalService) { 
     super()
@@ -23,6 +27,10 @@ export class TransactionService extends CommonService {
     this.ledgerList = this.ledgerListSource.asObservable()
     this.resultStatusLedgerSource = new BehaviorSubject<any>({});
     this.resultStatusLedger = this.resultStatusLedgerSource.asObservable()
+    this.transactionListSource = new BehaviorSubject<any>({});
+    this.transactionList = this.transactionListSource.asObservable()
+    this.ledgerBalanceSource = new BehaviorSubject<any>({});
+    this.ledgerBalance = this.ledgerBalanceSource.asObservable()
   }
 
   public saveTransaction(data:any){
@@ -39,6 +47,32 @@ export class TransactionService extends CommonService {
           this.ledgerListSource.next(res?.result)
         else
             this.ledgerListSource.next([])
+      })
+    })
+  }
+
+  public getTransactions(data:any){
+    this.spinnerWork('Fetching transaction...',true,()=>{
+      this.ext.post('/transaction/list',data,[]).subscribe(res=>{
+        if(res?.status === 'success'){
+          res.result.data = res?.result.data.sort((a:any,b:any)=>a.tran_date.localeCompare(b.tran_date))
+          this.transactionListSource.next(res.result)
+        }
+        else
+            this.transactionListSource.next([])
+      })
+    })
+  }
+
+  public getLedgerBalance(data:any){
+    this.spinnerWork('Calculating balance...',true,()=>{
+      this.ext.post('/ledger/ledgerBalance',data,[]).subscribe(res=>{
+        if(res?.status === 'success'){
+          console.log(res.result)
+          this.ledgerBalanceSource.next(res.result)
+        }
+        else
+            this.ledgerBalanceSource.next([])
       })
     })
   }

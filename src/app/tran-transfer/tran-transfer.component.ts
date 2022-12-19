@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { NzDrawerPlacement } from 'ng-zorro-antd/drawer';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { TransactionService } from '../transaction.service';
 
@@ -20,6 +21,10 @@ interface ledgerFull {
   styleUrls: ['./tran-transfer.component.css']
 })
 export class TranTransferComponent implements OnInit {
+
+ @Output() ledgerBalanceDrawer = new EventEmitter<any>()
+ @Output() ledgerDrawer = new EventEmitter<boolean>()
+ @Input() drawerPosition : string = ''
 
   validateForm: FormGroup;
   ledgerList: {id: string, name: string}[] = []
@@ -76,6 +81,17 @@ export class TranTransferComponent implements OnInit {
 
   private getTagList(){
     this.tags.push('investment')
+  }
+
+  openLedgerDrawer(){
+    this.ledgerDrawer.emit(true)
+  }
+  openBalanceDrawer(){
+    const data = {
+      'position' : this.drawerPosition as NzDrawerPlacement,
+      'balanceDrawerVisible' : true
+    }
+    this.ledgerBalanceDrawer.emit(data)
   }
 
 }

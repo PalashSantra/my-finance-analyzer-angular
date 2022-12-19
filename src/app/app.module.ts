@@ -23,6 +23,9 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,6 +40,8 @@ import { TranEntryComponent } from './tran-entry/tran-entry.component';
 import { TranListComponent } from './tran-list/tran-list.component';
 import { TranTransferComponent } from './tran-transfer/tran-transfer.component';
 import { LedgerEntryComponent } from './ledger-entry/ledger-entry.component';
+import { LedgerBalanceDrawerComponent } from './ledger-balance-drawer/ledger-balance-drawer.component';
+import { LedgerBalanceChartComponent } from './ledger-balance-chart/ledger-balance-chart.component';
 
 
 const icons: IconDefinition[] = [ UserOutline, LockOutline, AlertOutline ];
@@ -54,7 +59,9 @@ const icons: IconDefinition[] = [ UserOutline, LockOutline, AlertOutline ];
     TranEntryComponent,
     TranListComponent,
     TranTransferComponent,
-    LedgerEntryComponent
+    LedgerEntryComponent,
+    LedgerBalanceDrawerComponent,
+    LedgerBalanceChartComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +85,9 @@ const icons: IconDefinition[] = [ UserOutline, LockOutline, AlertOutline ];
     NzSelectModule,
     NzSpinModule,
     NzMessageModule,
-    NzDrawerModule
+    NzDrawerModule,
+    NzTableModule,
+    NzToolTipModule
   ],
   providers: [ { provide: NZ_I18N, useValue: en_US } ],
   bootstrap: [AppComponent]

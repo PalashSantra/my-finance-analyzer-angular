@@ -1,5 +1,5 @@
 
-    <nz-card nzTitle="Transaction Details" >
+    <nz-card nzTitle="Transaction Details" [nzExtra]="drawerLink">
         <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
             <nz-form-item>
                 <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Transaction Date</nz-form-label>
@@ -29,7 +29,7 @@
                         <nz-option *ngFor="let ledger of ledgerList" nzLabel="{{ledger.name}}" nzValue="{{ledger.id}}"></nz-option>
                     </nz-select>
                 </nz-form-control>
-                <div nz-col [nzSm]="4" [nzXs]="4"><button nz-button nzType="primary" nzShape="circle" (click)="openDrawer()">A</button></div>
+                <div nz-col [nzSm]="4" [nzXs]="4"><button nz-button nzType="primary" nzShape="circle" (click)="openLedgerDrawer()">A</button></div>
             </nz-form-item>
             <nz-form-item>
                 <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Particulars</nz-form-label>
@@ -48,5 +48,8 @@
             </div>
         </form>
     </nz-card>
-    <app-ledger-entry [drawerVisible]="drawerVisible" (drawerStatus)="drawerClose($event)"></app-ledger-entry>
+    <ng-template #drawerLink>
+        <a (click)="openBalanceDrawer()">More</a>
+    </ng-template>
+    
     

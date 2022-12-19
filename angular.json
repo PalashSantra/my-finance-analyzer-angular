@@ -27,7 +27,7 @@
               "node_modules/ng-zorro-antd/resizable/style/index.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": ["node_modules/chart.js/auto/auto.js"]
           },
           "configurations": {
             "production": {

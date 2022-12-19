@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NzDrawerPlacement } from 'ng-zorro-antd/drawer';
 
 @Component({
   selector: 'app-transaction',
@@ -8,6 +9,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class TransactionComponent implements OnInit {
 
+  balanceDrawerVisible : boolean = false
+  ledgerDrawerVisible : boolean = false
+  position : NzDrawerPlacement = 'left'
   validateForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -30,5 +34,21 @@ export class TransactionComponent implements OnInit {
   submitForm(): void {
     console.log(this.validateForm.value);
   }
+  closeBalanceDrawer(status : boolean){
+    this.balanceDrawerVisible = status
+  }
+  openBalanceDrawer(data : any){
+    if(data?.position && data?.balanceDrawerVisible){
+      this.position = data.position,
+      this.balanceDrawerVisible = data.balanceDrawerVisible
+    }
+  }
+  closeLedgerDrawer(status : boolean){
+    this.ledgerDrawerVisible = status
+  }
+  openLedgerDrawer(status : boolean){
+    this.ledgerDrawerVisible = status
+  }
+  
 
 }
