@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { NzPlacement } from 'ng-zorro-antd/date-picker/date-picker.component';
+import { NzDrawerPlacement } from 'ng-zorro-antd/drawer';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { TransactionService } from '../transaction.service';
 
@@ -24,12 +26,17 @@ interface ledgerFull {
 
 export class TranEntryComponent implements OnInit {
 
+ @Output() ledgerBalanceDrawer = new EventEmitter<any>()
+ @Output() ledgerDrawer = new EventEmitter<boolean>()
+ @Input() drawerPosition : string = ''
+
   validateForm!: FormGroup;
   ledgerList: {id: string, name: string}[] = []
   ledgerFullList : ledgerFull[] = []
   tags : string[] = []
 
-  drawerVisible : boolean = false
+  
+  
 
   constructor(private fb: FormBuilder, private tran:TransactionService, private message: NzMessageService) {
    }
@@ -114,12 +121,18 @@ export class TranEntryComponent implements OnInit {
     this.tran.getLedgers(postData)
   }
 
-  openDrawer(){
-    this.drawerVisible = true
+  openLedgerDrawer(){
+    this.ledgerDrawer.emit(true)
   }
-  drawerClose(status : boolean){
-    this.drawerVisible = status
+  openBalanceDrawer(){
+    const data = {
+      'position' : this.drawerPosition as NzDrawerPlacement,
+      'balanceDrawerVisible' : true
+    }
+    this.ledgerBalanceDrawer.emit(data)
   }
+  
+  
   private getTagList(){
     this.tags.push('investment')
   }

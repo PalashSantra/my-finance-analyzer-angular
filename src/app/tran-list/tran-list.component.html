@@ -1,4 +1,28 @@
 
     <nz-card nzTitle="Transaction List" >
-
+        <nz-table #tranList [nzData]="dataSet" 
+        [nzFrontPagination]="false"
+        [nzLoading]="loading"
+        [nzTotal]="total"
+        [nzPageSize]="pageSize"
+        [nzPageIndex]="pageIndex"
+        (nzQueryParams)="onQueryParamsChange($event)">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Ledger</th>
+                <th>Amount</th>
+                <th>Particulars</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of tranList.data">
+                <td>{{data.date}}</td>
+                <td>{{data.ledger.name}} <span nz-icon nzType="question-circle" nzTheme="outline" nz-tooltip nzTooltipTitle="{{data.ledger_detail}}"></span></td>
+                <td><span *ngIf="data.cost.amount" [ngClass]="{'amount-cr':data.cr, 'amount-dr':!data.cr}"> Rs. {{data.cost.amount}}</span>
+                    <span *ngIf="data.cost.unit" class=""> | {{data.cost.unit}}</span></td>
+                <td>{{data.particulars}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
     </nz-card>

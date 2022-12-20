@@ -1,5 +1,5 @@
 
-    <nz-card nzTitle="Amount Transfer">
+    <nz-card nzTitle="Amount Transfer" [nzExtra]="drawerLink">
         <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
             <nz-form-item>
                 <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Transaction Date</nz-form-label>
@@ -55,3 +55,6 @@
             </div>
         </form>
     </nz-card>
+    <ng-template #drawerLink>
+        <a (click)="openBalanceDrawer()">More</a>
+    </ng-template>
