@@ -18,13 +18,29 @@ export class CommonService {
     this.loaderSource = new BehaviorSubject<any>({});
     this.loader = this.loaderSource.asObservable()
   }
-
-  changeSession(isSessionTimeOut:boolean, path:any){
-    this.isSessionTimeOutSource.next({'isSessionTimeOut': isSessionTimeOut,'path':path});
-  }
-
+  
   spinnerWork(message:string,status : boolean, cb?:Function){
     this.loaderSource.next({'message': message, 'isSpinning': status})
     if(cb) cb()
+  }
+  callRefreshTokenIfRequired(ref:any,cb:Function){
+    const tokenTime = sessionStorage.getItem('tokenTime');
+      if(tokenTime){
+        const tokenTimeDate = Number(tokenTime)
+        const currentTimeDate = Date.now()
+        if((currentTimeDate-tokenTimeDate)<=180000){
+            ref.ext.post('/refreshToken',{},[],true).subscribe((res:any)=>{
+              if(res?.status==='success'){
+                sessionStorage.setItem('token',res.token);
+                sessionStorage.setItem('tokenTime',Date.now().toString());
+                cb()
+              }
+              else{
+                sessionStorage.clear()
+                ref.router.navigateByUrl('/')
+              }
+            })
+        }
+      }
   }
 }

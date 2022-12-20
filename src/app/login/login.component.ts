@@ -54,6 +54,7 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('user',res.user_id);
           sessionStorage.setItem('token',res.token);
           sessionStorage.setItem('refreshToken',res.refreshToken);
+          sessionStorage.setItem('tokenTime',Date.now().toString());
           if(this.loginFrm.get('remember')?.value){
             localStorage.setItem('refreshToken',res.refreshToken);
             localStorage.setItem('user',res.user_id);

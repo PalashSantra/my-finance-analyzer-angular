@@ -21,7 +21,8 @@ export class AuthGuard implements CanActivate {
     if(sessionStorage.getItem('token')){
       this.ext.post('/validateToken',{},[]).subscribe(res=>{
         if(res?.status==='error'){
-          this.ext.changeSession(true,route.url)
+          sessionStorage.clear()
+          this.router.navigate(['/login'])
           return false;
         }else if(res?.status==='success'){
           return true;
@@ -37,6 +38,7 @@ export class AuthGuard implements CanActivate {
         if(res?.status==='success'){
           sessionStorage.setItem('user',res.user_id);
           sessionStorage.setItem('token',res.token);
+          sessionStorage.setItem('tokenTime',Date.now().toString());
         }
         else{
           this.router.navigateByUrl('/')
